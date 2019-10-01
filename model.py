@@ -1,21 +1,19 @@
 class Script(object):
-    _story = None
-    _scene = None
-    _line = None
-    _character = None
-    _text_color = None
-
     def __init__(self, story, scene, line, character, text_color) -> None:
         super().__init__()
-        self._story = story
-        self._scene = scene
-        self._line = line
-        self._character = character
-        self._text_color = text_color
+        self.story = story
+        self.scene = scene
+        self.line = line
+        self.character = character
+        self.text_color = text_color
 
     def __str__(self) -> str:
-        return self._story
+        return self.story
+
+    def file(self):
+        line = self.story + ', ' + self.scene + ', ' + self.character + ', ' + self.line
+        return line
 
     def show_script(self):
-        text = self._character + ': ' + self._line
+        text = self.story + '\n' + self.scene + ' - ' + self.character + ': ' + self.line
         return text
