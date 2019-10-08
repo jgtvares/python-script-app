@@ -38,7 +38,7 @@ class DBController:
         self.connection.commit()
         cursor.close()
 
-    def return_script_as_list(self):
+    def all_scripts(self):
         cursor = self.connection.cursor()
         cursor.execute(self.select)
         script_list = cursor.fetchall()
