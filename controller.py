@@ -7,10 +7,11 @@ import webbrowser
 
 
 class Controller(object):
-    scriptView = None
+    scriptView = App(create_cmd=None, load_cmd=None, play_cmd=None)
     db_ctrl = None
     saved = None
     textList = []
+    all_scripts_list = []
 
     def insert(self):
         self.saved = self.scriptView.read()
@@ -19,33 +20,23 @@ class Controller(object):
         self.textList.append(self.saved)
 
     def load(self):
-        _list = self.db_ctrl.return_script_as_list()
+        scripts = self.db_ctrl.all_scripts()
+        self.scriptView.load_scripts(scripts)
+        self.all_scripts_list.append(scripts)
 
-        with open('./template.html', 'r') as file:
-            script_file = file.read().replace('\n', '')
-
-        for line in _list:
-            script = Script(line[0], line[1], line[2], line[3], line[4])
-
-            jinja2.Template(script_file).render(
-                    story=script.story,
-                    scene=script.scene,
-                    character=script.character,
-                    line=script.line,
-                    text_color=script.text_color
-            )
-
-        return webbrowser.open('file:///home/jg/python-script-app/template.html')
+        print(scripts)
 
     def play(self):
-        _list = self.db_ctrl.return_script_as_list()
+        s = self.db_ctrl.all_scripts()
+        self.scriptView.play(s)
+        """_list = self.db_ctrl.all_scripts()
 
         for line in _list:
             script = Script(line[0], line[1], line[2], line[3], line[4])
             self.scriptView.read()
             self.textList.append(script)
 
-            print(self.textList); sleep(2.0)
+            print(self.textList)"""
 
     def exec(self):
         self.db_ctrl = DBController()
