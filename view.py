@@ -1,5 +1,7 @@
 from tkinter import Tk, Label, Entry, Button, Listbox, END
 from model import Script
+import jinja2
+import webbrowser
 
 
 class App(object):
@@ -14,6 +16,7 @@ class App(object):
 
     # List Box
     textListBox = None
+    all_scriptsListBox = None
 
     # Labels
     storyLabel = None
@@ -21,6 +24,8 @@ class App(object):
     lineLabel = None
     text_colorLabel = None
     characterLabel = None
+    textListBoxLabel = None
+    all_scriptsListBoxLabel = None
 
     # Buttons
     createButton = None
@@ -40,6 +45,22 @@ class App(object):
 
     def create_script(self, script):
         self.textListBox.insert(END, script)
+
+    def load_scripts(self, scripts):
+        for s in scripts:
+            self.all_scriptsListBox.insert(END, s)
+
+    def play(self, s):
+        with open('./template.html', 'r') as f:
+            f = f.read().replace('\n', '')
+
+        story = 'test'
+
+        formatted = jinja2.Template(f).render(
+            s=story
+        )
+
+        webbrowser.open('file:///home/jg/python-script-app/template.html')
 
     def __init__(self, create_cmd, load_cmd, play_cmd) -> None:
         super().__init__()
@@ -62,7 +83,11 @@ class App(object):
         self.loadButton = Button(master=self.window, text='Load Scripts', command=load_cmd)
         self.playButton = Button(master=self.window, text='Play Story', command=play_cmd)
 
+        self.textListBoxLabel = Label(master=self.window, text='Recently Created Scripts')
         self.textListBox = Listbox(master=self.window, width=50)
+
+        self.all_scriptsListBoxLabel = Label(master=self.window, text='Loaded From Database')
+        self.all_scriptsListBox = Listbox(master=self.window, width=50)
 
         self.storyLabel.grid(row=1, column=1)
         self.storyEntry.grid(row=1, column=2)
@@ -83,7 +108,11 @@ class App(object):
         self.loadButton.grid(row=6, column=2)
         self.playButton.grid(row=6, column=3)
 
-        self.textListBox.grid(row=7, column=1, columnspan=3)
+        self.textListBoxLabel.grid(row=8, column=1)
+        self.textListBox.grid(row=9, column=1, columnspan=3)
+
+        self.all_scriptsListBoxLabel.grid(row=10, column=1)
+        self.all_scriptsListBox.grid(row=11, column=1, columnspan=3)
 
     def exec(self):
         self.window.mainloop()
