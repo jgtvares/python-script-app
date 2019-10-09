@@ -16,7 +16,7 @@ class DBController:
 
     select = "SELECT * FROM SCRIPT"
 
-    select_where = "SELECT STORY, SCENE, CHARACTER, LINE, TEXT_COLOR FROM SCRIPT WHERE STORY = ?"
+    select_where = "SELECT * FROM SCRIPT WHERE STORY = '?'"
 
     def __init__(self) -> None:
         super().__init__()
