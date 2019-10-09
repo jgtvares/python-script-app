@@ -1,6 +1,5 @@
 from tkinter import Tk, Label, Entry, Button, Listbox, END
 from model import Script
-import jinja2
 import webbrowser
 
 
