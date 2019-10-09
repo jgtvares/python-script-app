@@ -47,21 +47,26 @@ class App(object):
         self.textListBox.insert(END, script)
 
     def load_scripts(self, scripts):
-        print(scripts)
         for item in enumerate(scripts):
-            self.all_scriptsListBox.insert(END, item)
+            sep = item.__str__()
+            _sep = item[1][0]
+            self.all_scriptsListBox.insert(END, _sep)
 
     def play(self, script):
-        story = script.__str__
-        
-        with open('./template.html', 'r') as f:
-            page = f.read().replace('\n', '')
+        story = script.__str__()
+        scene = script.return_scene()
+        line = script.return_line()
+        character = script.return_character()
+        text_color = script.return_text_color()
+        color = str(text_color)
 
-        formatted = jinja2.Template(page).render(
-            s=story
-        )
+        html = '<html><body><h2>' + str(story) + '</h2><br>' + '<p><strong>Scene:</strong> ' + str(scene) + '</p><br>' + '<p><strong>Character:</strong> ' + str(character) + '</p><br>'  + '<p><strong>Line: </strong><a style="color: ' + color + '";>' + str(line) + '</a></p><br>'
+        chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
 
-        webbrowser.open(formatted)
+        with open('./template.html', 'w') as f:
+            page = f.write(html)
+
+        webbrowser.get(chrome_path).open('./template.html')
 
     def __init__(self, create_cmd, load_cmd, play_cmd) -> None:
         super().__init__()
