@@ -10,6 +10,18 @@ class Script(object):
     def __str__(self) -> str:
         return self.story
 
+    def return_scene(self):
+        return self.scene
+
+    def return_line(self):
+        return self.line
+
+    def return_character(self):
+        return self.character
+
+    def return_text_color(self):
+        return self.text_color
+
     def file(self):
         line = self.story + ', ' + self.scene + ', ' + self.character + ', ' + self.line
         return line
