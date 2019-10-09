@@ -47,21 +47,21 @@ class App(object):
         self.textListBox.insert(END, script)
 
     def load_scripts(self, scripts):
-        for s, item in enumerate(scripts):
-            self.all_scriptsListBox.insert(s, scripts)
+        print(scripts)
+        for item in enumerate(scripts):
+            self.all_scriptsListBox.insert(END, item)
 
-    def play(self, s):
-        pass
-        """with open('./template.html', 'r') as f:
-            f = f.read().replace('\n', '')
+    def play(self, script):
+        story = script.__str__
+        
+        with open('./template.html', 'r') as f:
+            page = f.read().replace('\n', '')
 
-        story = 'test'
-
-        formatted = jinja2.Template(f).render(
+        formatted = jinja2.Template(page).render(
             s=story
         )
 
-        webbrowser.open('file:///home/jg/python-script-app/template.html')"""
+        webbrowser.open(formatted)
 
     def __init__(self, create_cmd, load_cmd, play_cmd) -> None:
         super().__init__()
