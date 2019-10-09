@@ -28,7 +28,7 @@ class Controller(object):
 
     def play(self):
         self.saved = script = self.scriptView.read()
-        self.scriptView.play(s)
+        self.db_ctrl.re
         """_list = self.db_ctrl.all_scripts()
 
         for line in _list:
