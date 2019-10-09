@@ -3,10 +3,6 @@ from macpath import norm_error
 from view import App
 from model import Script
 from db_controller import DBController
-from time import sleep
-import jinja2
-import webbrowser
-
 
 class Controller(object):
     scriptView = None # App(create_cmd=None, load_cmd=None, play_cmd=None)
