@@ -47,11 +47,12 @@ class App(object):
         self.textListBox.insert(END, script)
 
     def load_scripts(self, scripts):
-        for s in scripts:
-            self.all_scriptsListBox.insert(END, s)
+        for s, item in enumerate(scripts):
+            self.all_scriptsListBox.insert(s, scripts)
 
     def play(self, s):
-        with open('./template.html', 'r') as f:
+        pass
+        """with open('./template.html', 'r') as f:
             f = f.read().replace('\n', '')
 
         story = 'test'
@@ -60,7 +61,7 @@ class App(object):
             s=story
         )
 
-        webbrowser.open('file:///home/jg/python-script-app/template.html')
+        webbrowser.open('file:///home/jg/python-script-app/template.html')"""
 
     def __init__(self, create_cmd, load_cmd, play_cmd) -> None:
         super().__init__()

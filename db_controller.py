@@ -14,7 +14,7 @@ class DBController:
 
     insert = "INSERT INTO SCRIPT(STORY, SCENE, CHARACTER, LINE, TEXT_COLOR) VALUES(?,?,?,?,?)"
 
-    select = "SELECT STORY, SCENE, CHARACTER, LINE, TEXT_COLOR FROM SCRIPT"
+    select = "SELECT * FROM SCRIPT"
 
     select_where = "SELECT STORY, SCENE, CHARACTER, LINE, TEXT_COLOR FROM SCRIPT WHERE STORY = ?"
 
@@ -46,4 +46,12 @@ class DBController:
         cursor.close()
 
         return script_list
+    
+    def read_script(self, story):
+        cursor = self.connection.cursor()
+        cursor.execute(self.select_where)
+        script = cursor.fetchall()
+        self.connection.commit()
+        cursor.close()
 
+        return script
