@@ -5,7 +5,7 @@ from model import Script
 from db_controller import DBController
 
 class Controller(object):
-    scriptView = None # App(create_cmd=None, load_cmd=None, play_cmd=None)
+    scriptView = None
     db_ctrl = None
     saved = None
     textList = []
@@ -22,14 +22,16 @@ class Controller(object):
         self.scriptView.load_scripts(scripts)
         self.all_scripts_list.append(scripts)
 
-    def play(self):
+    def read_and_play(self):
         self.saved = self.scriptView.read()
-        story = self.saved.__str__()
-        self.db_ctrl.read_script(story)
-        self.scriptView.play(self.saved)
+        self.scriptView.read_and_play(self.saved)
+
+    def load_and_play(self):
+        scripts = self.db_ctrl.all_scripts()
+        self.scriptView.load_and_play(scripts)
 
     def exec(self):
         self.db_ctrl = DBController()
-        self.scriptView = App(self.insert, self.load, self.play)
+        self.scriptView = App(self.insert, self.load, self.read_and_play, self.load_and_play)
 
         self.scriptView.exec()
