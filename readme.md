@@ -36,7 +36,7 @@ It should come with Python3.* already. But I was using **Python 3.7** in this pr
 - Installing on Ubuntu (*python3*):
 
 ```bash
-sudo apt-get install python3-tk
+    sudo apt-get install python3-tk
 ```
 
 2. **Set Chrome as Default Browser**
