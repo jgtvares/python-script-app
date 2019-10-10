@@ -47,7 +47,7 @@ The app opens a **HTML** page showing the full scructure of a selected script.
 
 So, to be certain that everything will work smoothly, I advise you to set Chrome as your default browser!
 
-If you set Chrome for default but the app keeps opening IE, you'll need to tell Python's **webbrowser** method where the *chrome* executable is.
+If you've already set Chrome for default but the app keeps opening IE, you'll need to tell Python's **webbrowser** method where the *chrome* executable is.
 
 - **Windows**:
 
