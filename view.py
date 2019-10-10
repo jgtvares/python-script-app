@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Entry, Button, Listbox, END
+from tkinter import Tk, Label, Entry, Button, Listbox, END, ACTIVE
 from model import Script
 import webbrowser
 
@@ -30,6 +30,7 @@ class App(object):
     createButton = None
     loadButton = None
     playButton = None
+    playSelectedButton = None
 
     def read(self):
         story = self.storyEntry.get()
@@ -42,6 +43,22 @@ class App(object):
 
         return script
 
+    def read_and_play(self, script):
+        story = script.__str__()
+        scene = script.return_scene()
+        character = script.return_character()
+        line = script.return_line()
+        text_color = script.return_text_color()
+        color = str(text_color)
+        
+        html = '<html><body><h2>' + str(story) + '</h2><br>' + '<p><strong>Scene:</strong> ' + str(scene) + '</p><br>' + '<p><strong>Character:</strong> ' + str(character) + '</p><br>'  + '<p><strong>Line: </strong><a style="color: ' + color + '";>' + str(line) + '</a></p><br>'
+        #chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+
+        with open('./template.html', 'w') as f:
+            page = f.write(html)
+
+        webbrowser.open('./template.html')
+
     def create_script(self, script):
         self.textListBox.insert(END, script)
 
@@ -51,23 +68,27 @@ class App(object):
             _sep = item[1][0]
             self.all_scriptsListBox.insert(END, _sep)
 
-    def play(self, script):
-        story = script.__str__()
-        scene = script.return_scene()
-        line = script.return_line()
-        character = script.return_character()
-        text_color = script.return_text_color()
-        color = str(text_color)
+    def load_and_play(self, scripts):
+        for s in scripts:
+            selected = self.all_scriptsListBox.get(ACTIVE)
+            
+            if s[0] == selected:
+                story = s[0]
+                scene = s[1]
+                line = s[2]
+                character = s[3]
+                text_color = s[4]
+                color = str(text_color)
 
         html = '<html><body><h2>' + str(story) + '</h2><br>' + '<p><strong>Scene:</strong> ' + str(scene) + '</p><br>' + '<p><strong>Character:</strong> ' + str(character) + '</p><br>'  + '<p><strong>Line: </strong><a style="color: ' + color + '";>' + str(line) + '</a></p><br>'
-        chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+        #chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
 
         with open('./template.html', 'w') as f:
             page = f.write(html)
 
-        webbrowser.get(chrome_path).open('./template.html')
+        webbrowser.open('./template.html')
 
-    def __init__(self, create_cmd, load_cmd, play_cmd) -> None:
+    def __init__(self, create_cmd, load_cmd, play_cmd, play_selected_cmd) -> None:
         super().__init__()
         self.storyLabel = Label(master=self.window, text='Story:')
         self.storyEntry = Entry(master=self.window, width=20)
@@ -87,6 +108,7 @@ class App(object):
         self.createButton = Button(master=self.window, text='Create Script', command=create_cmd)
         self.loadButton = Button(master=self.window, text='Load Scripts', command=load_cmd)
         self.playButton = Button(master=self.window, text='Play Story', command=play_cmd)
+        self.playSelectedButton = Button(master=self.window, text='Play Selected Story', command=play_selected_cmd)
 
         self.textListBoxLabel = Label(master=self.window, text='Recently Created Scripts')
         self.textListBox = Listbox(master=self.window, width=50)
@@ -118,6 +140,7 @@ class App(object):
 
         self.all_scriptsListBoxLabel.grid(row=10, column=1)
         self.all_scriptsListBox.grid(row=11, column=1, columnspan=3)
+        self.playSelectedButton.grid(row=12, column=2)
 
     def exec(self):
         self.window.mainloop()
