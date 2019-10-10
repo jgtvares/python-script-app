@@ -86,6 +86,7 @@ class App(object):
         with open('./template.html', 'w') as f:
             page = f.write(html)
 
+        #webbrowser.get(chrome_path).open('./template.html')
         webbrowser.open('./template.html')
 
     def __init__(self, create_cmd, load_cmd, play_cmd, play_selected_cmd) -> None:
