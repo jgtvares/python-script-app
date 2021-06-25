@@ -1,5 +1,3 @@
-from macpath import norm_error
-
 from view import App
 from model import Script
 from db_controller import DBController
